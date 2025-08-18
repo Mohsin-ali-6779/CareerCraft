@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CareerCraft Signup</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #f0f4f8;
+      color: #333;
+      overflow-y: auto;
+      min-height: 100vh;
+    }
+
+    /* Intro Section */
+    .intro {
+      width: 100%;
+      background: linear-gradient(135deg, #4f46e5, #06b6d4);
+      color: white;
+      text-align: center;
+      padding: 50px 20px;
+    }
+
+    .intro h1 {
+      font-size: 2.5rem;
+      margin-bottom: 15px;
+    }
+
+    .intro p {
+      font-size: 1.2rem;
+      line-height: 1.6;
+    }
+
+    /* Signup Form */
+    .signup-box {
+      width: 100%;
+      max-width: 1000px;
+      margin: 20px auto 50px auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0px 6px 20px rgba(0,0,0,0.1);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      border-top: 5px solid #4f46e5;
+    }
+
+    .form-left, .form-right {
+      flex: 1;
+      min-width: 300px;
+    }
+
+    .signup-box h2 {
+      width: 100%;
+      text-align: center;
+      margin-bottom: 25px;
+      color: #4f46e5;
+      font-size: 28px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 6px;
+      color: #4f46e5;
+    }
+
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+      transition: 0.3s;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+      border-color: #06b6d4;
+      outline: none;
+      box-shadow: 0 0 5px rgba(79, 70, 229, 0.3);
+    }
+
+    /* Role Sections */
+    .role-section {
+      display: none;
+      margin-top: 15px;
+      padding: 15px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      background: #f9f9ff;
+    }
+
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 10px;
+      color: #4f46e5;
+      font-weight: bold;
+    }
+
+    button {
+      width: 100%;
+      background: linear-gradient(135deg, #4f46e5, #06b6d4);
+      color: #fff;
+      font-size: 16px;
+      font-weight: bold;
+      padding: 14px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      opacity: 0.9;
+    }
+
+    @media(max-width: 900px) {
+      .signup-box {
+        flex-direction: column;
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Intro Section -->
+  <div class="intro">
+    <h1>Join CareerCraft 🚀</h1>
+    <p>
+      Unlock your career journey by signing up. <br>
+      Students, instructors, and admins — one platform, endless opportunities!
+    </p>
+  </div>
+
+  <!-- Signup Form -->
+  <div class="signup-box">
+    <h2>Create Account</h2>
+
+    <div class="form-left">
+      <div class="form-group">
+        <label>Full Name</label>
+        <input type="text" placeholder="Enter your full name" required>
+      </div>
+
+      <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" placeholder="Enter your email" required>
+      </div>
+
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" placeholder="Enter password" required>
+      </div>
+
+      <div class="form-group">
+        <label>Confirm Password</label>
+        <input type="password" placeholder="Confirm password" required>
+      </div>
+
+      <div class="form-group">
+        <label>Username</label>
+        <input type="text" placeholder="Choose a username">
+      </div>
+
+      <div class="form-group">
+        <label>Phone Number</label>
+        <input type="tel" placeholder="+91 XXXXX XXXXX">
+      </div>
+    </div>
+
+    <div class="form-right">
+      <div class="form-group">
+        <label>Date of Birth</label>
+        <input type="date">
+      </div>
+
+      <div class="form-group">
+        <label>Gender</label>
+        <select>
+          <option value="">Select Gender</option>
+          <option>Male</option>
+          <option>Female</option>
+          <option>Other</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Role</label>
+        <select id="role" onchange="showRoleFields(this.value)">
+          <option value="">Select Role</option>
+          <option value="student">Student</option>
+          <option value="instructor">Instructor</option>
+          <option value="admin">Admin</option>
+        </select>
+      </div>
+
+      <div id="student-fields" class="role-section">
+        <div class="form-group">
+          <label>Course Interests</label>
+          <input type="text" placeholder="e.g. Data Science, Web Dev">
+        </div>
+        <div class="form-group">
+          <label>Department</label>
+          <input type="text" placeholder="e.g. CSE, IT">
+        </div>
+        <div class="form-group">
+          <label>Year of Study</label>
+          <select>
+            <option value="">Select Year</option>
+            <option>1st Year</option>
+            <option>2nd Year</option>
+            <option>3rd Year</option>
+            <option>4th Year</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="instructor-fields" class="role-section">
+        <div class="form-group">
+          <label>Qualification</label>
+          <input type="text" placeholder="e.g. PhD, M.Tech">
+        </div>
+        <div class="form-group">
+          <label>Area of Expertise</label>
+          <input type="text" placeholder="e.g. AI, Cloud Computing">
+        </div>
+      </div>
+
+      <div id="admin-fields" class="role-section">
+        <div class="form-group">
+          <label>Admin Code</label>
+          <input type="password" placeholder="Enter admin code">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Security Question</label>
+        <select>
+          <option value="">Choose a question</option>
+          <option>What is your pet's name?</option>
+          <option>What is your mother's maiden name?</option>
+          <option>What is your favorite teacher's name?</option>
+        </select>
+        <input type="text" placeholder="Your answer">
+      </div>
+
+      <div class="checkbox-group">
+        <input type="checkbox" required>
+        <label>I’m not a robot</label>
+      </div>
+
+      <div class="checkbox-group">
+        <input type="checkbox" required>
+        <label>I agree to the Terms & Conditions</label>
+      </div>
+
+      <button type="submit">Create Account</button>
+    </div>
+  </div>
+
+  <script>
+    function showRoleFields(role) {
+      document.getElementById("student-fields").style.display = "none";
+      document.getElementById("instructor-fields").style.display = "none";
+      document.getElementById("admin-fields").style.display = "none";
+
+      if (role === "student") {
+        document.getElementById("student-fields").style.display = "block";
+      } else if (role === "instructor") {
+        document.getElementById("instructor-fields").style.display = "block";
+      } else if (role === "admin") {
+        document.getElementById("admin-fields").style.display = "block";
+      }
+    }
+  </script>
+
+</body>
+</html>

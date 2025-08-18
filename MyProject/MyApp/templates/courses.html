@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CareerCraft - Courses</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #f0f4f8;
+      color: #333;
+    }
+
+    /* Navbar */
+    .navbar {
+      background: linear-gradient(135deg, #4f46e5, #06b6d4);
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 30px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .navbar h1 {
+      font-size: 24px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      font-size: 14px;
+      transition: 0.3s;
+    }
+
+    .nav-links a:hover {
+      text-decoration: underline;
+    }
+
+    .search-bar input {
+      padding: 8px 12px;
+      border-radius: 6px;
+      border: none;
+      outline: none;
+      font-size: 14px;
+    }
+
+    .profile {
+      background: white;
+      color: #4f46e5;
+      padding: 8px 15px;
+      border-radius: 20px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    /* Intro Section */
+    .intro {
+      text-align: center;
+      padding: 50px 20px;
+      background: linear-gradient(135deg, #4f46e5, #06b6d4);
+      color: white;
+    }
+
+    .intro h2 {
+      font-size: 34px;
+      margin-bottom: 15px;
+    }
+
+    .intro p {
+      font-size: 18px;
+      max-width: 700px;
+      margin: auto;
+      line-height: 1.6;
+    }
+
+    /* Courses Section */
+    .courses {
+      padding: 40px 20px;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .courses h2 {
+      font-size: 28px;
+      text-align: center;
+      margin-bottom: 30px;
+      color: #4f46e5;
+    }
+
+    .course-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .course-card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0px 4px 15px rgba(0,0,0,0.1);
+      overflow: hidden;
+      transition: transform 0.3s;
+    }
+
+    .course-card:hover {
+      transform: translateY(-8px);
+    }
+
+    .course-card img {
+  width: 100%;
+  height: 20vw;     /* height based on viewport width */
+  max-height: 200px; /* optional max height */
+  object-fit: cover;
+}
+
+
+    .course-card .content {
+      padding: 15px;
+    }
+
+    .course-card h3 {
+      font-size: 18px;
+      margin-bottom: 8px;
+      color: #4f46e5;
+    }
+
+    .course-card p {
+      font-size: 14px;
+      color: #555;
+      margin-bottom: 12px;
+    }
+
+    .course-card button {
+      background: linear-gradient(135deg, #4f46e5, #06b6d4);
+      border: none;
+      padding: 10px;
+      width: 100%;
+      border-radius: 8px;
+      color: white;
+      font-size: 14px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+    .course-img {
+    width: 100%;   /* image will fill the container width */
+    height: auto;  /* keeps aspect ratio */
+    border-radius: 12px; /* optional rounded corners */
+    object-fit: cover;  /* fills container nicely if size changes */
+    }
+    .course-card img {
+  width: 100%;
+  height: 200px;   /* fixed height */
+  object-fit: cover; /* image adjusts without stretching */
+}
+
+
+
+    .course-card button:hover {
+      opacity: 0.85;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <div class="navbar">
+    <h1>CareerCraft 🚀</h1>
+    <div class="nav-links">
+      <div class="search-bar">
+        <input type="text" placeholder="Search courses..." id="courseSearch" onkeyup="searchCourses()">
+      </div>
+      <a href="#">Home</a>
+      <a href="#">My Courses</a>
+      <a href="#">About</a>
+      <a href="#">Contact</a>
+      <div class="profile">Profile</div>
+    </div>
+  </div>
+
+  <!-- Intro Section -->
+  <div class="intro">
+    <h2>Welcome to CareerCraft Courses</h2>
+    <p>Explore a variety of courses designed to boost your skills, guided by experts, and tailored for your career growth.</p>
+  </div>
+
+  <!-- Courses Section -->
+  <div class="courses">
+    <h2>🔥 Explore Our Courses</h2>
+    <div class="course-grid" id="courseGrid">
+      
+      <!-- Course Cards -->
+       <div class="course-card">
+        <img src="dsa.png" alt="Mobile App Development">
+        <div class="content">
+          <h3>Data Structure and Algorithm</h3>
+          <p>Learn Data Structure and Algorithms.</p>
+          <button>Enroll Now</button>
+        </div>
+      </div>
+      <div class="course-card">
+        <img src="python.png" alt="Python Programming">
+        <div class="content">
+          <h3>Python Programming</h3>
+          <p>Learn Python from scratch and build powerful applications.</p>
+          <button>Enroll Now</button>
+        </div>
+      </div>
+
+      <div class="course-card">
+        <img src="javascript.png" alt="Web Development">
+        <div class="content">
+          <h3>Full-Stack Web Development</h3>
+          <p>Master HTML, CSS, JavaScript, React, and Django.</p>
+          <button>Enroll Now</button>
+        </div>
+      </div>
+
+      <div class="course-card">
+        <img src="dataanalytics.png" alt="Data Analytics">
+        <div class="content">
+          <h3>Data Analytics</h3>
+          <p>Analyze and visualize data using Python, Pandas & Excel.</p>
+          <button>Enroll Now</button>
+        </div>
+      </div>
+
+      <div class="course-card">
+        <img src="ml.png" alt="Machine Learning">
+        <div class="content">
+          <h3>Machine Learning</h3>
+          <p>Build ML models and understand AI concepts with projects.</p>
+          <button>Enroll Now</button>
+        </div>
+      </div>
+
+      <div class="course-card">
+        <img src="cyber.png" alt="Cyber Security">
+        <div class="content">
+          <h3>Cyber Security</h3>
+          <p>Learn ethical hacking, security practices, and protection.</p>
+          <button>Enroll Now</button>
+        </div>
+      </div>
+
+      <div class="course-card">
+        <img src="cloud.png" alt="Cloud Computing">
+        <div class="content">
+          <h3>Cloud Computing</h3>
+          <p>Explore AWS, Azure, and cloud technologies for deployment.</p>
+          <button>Enroll Now</button>
+        </div>
+      </div>
+
+      <div class="course-card">
+        <img src="java.png" alt="Java Programming">
+        <div class="content">
+          <h3>Java Programming</h3>
+          <p>Master Java and object-oriented programming concepts.</p>
+          <button>Enroll Now</button>
+        </div>
+      </div>
+
+      <div class="course-card">
+        <img src="mobile.png" alt="Mobile App Development">
+        <div class="content">
+          <h3>Mobile App Development</h3>
+          <p>Build Android and iOS apps using Flutter and React Native.</p>
+          <button>Enroll Now</button>
+        </div>
+      </div>
+
+      <div class="course-card">
+        <img src="uiux.png" alt="UI/UX Design">
+        <div class="content">
+          <h3>UI/UX Design</h3>
+          <p>Design beautiful interfaces and user experiences.</p>
+          <button>Enroll Now</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    function searchCourses() {
+      const input = document.getElementById('courseSearch').value.toLowerCase();
+      const cards = document.querySelectorAll('.course-card');
+      cards.forEach(card => {
+        const title = card.querySelector('h3').innerText.toLowerCase();
+        if(title.includes(input)) {
+          card.style.display = '';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+  </script>
+
+</body>
+</html>
