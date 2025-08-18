@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CareerCraft Signup</title>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; font-family: Arial, sans-serif;}
+    body { background: #f0f4f8; color:#333; min-height:100vh; overflow-y:auto;}
+    .intro { width:100%; background:linear-gradient(135deg,#4f46e5,#06b6d4); color:white; text-align:center; padding:50px 20px;}
+    .intro h1{ font-size:2.5rem; margin-bottom:15px;}
+    .intro p{ font-size:1.2rem; line-height:1.6;}
+    .signup-box{ width:100%; max-width:1000px; margin:20px auto 50px auto; background:#fff; padding:30px; border-radius:12px; box-shadow:0px 6px 20px rgba(0,0,0,0.1); display:flex; flex-wrap:wrap; gap:20px; border-top:5px solid #4f46e5;}
+    .form-left,.form-right{ flex:1; min-width:300px;}
+    .signup-box h2{ width:100%; text-align:center; margin-bottom:25px; color:#4f46e5; font-size:28px;}
+    .form-group{ margin-bottom:15px;}
+    .form-group label{ display:block; font-weight:bold; margin-bottom:6px; color:#4f46e5;}
+    .form-group input, .form-group select{ width:100%; padding:12px; border-radius:8px; border:1px solid #ccc; font-size:14px; transition:0.3s;}
+    .form-group input:focus, .form-group select:focus{ border-color:#06b6d4; outline:none; box-shadow:0 0 5px rgba(79,70,229,0.3);}
+    .role-section{ display:none; margin-top:15px; padding:15px; border:1px solid #ddd; border-radius:10px; background:#f9f9ff;}
+    .checkbox-group{ display:flex; align-items:center; gap:10px; margin-top:10px; color:#4f46e5; font-weight:bold;}
+    .errorlist{ color:red; font-size:13px; margin-bottom:5px; }
+    button{ width:100%; background:linear-gradient(135deg,#4f46e5,#06b6d4); color:#fff; font-size:16px; font-weight:bold; padding:14px; border:none; border-radius:8px; cursor:pointer; margin-top:20px; transition:0.3s;}
+    button:hover{ opacity:0.9;}
+    @media(max-width:900px){ .signup-box{ flex-direction:column; padding:20px;}}
+  </style>
+</head>
+<body>
+
+  <div class="intro">
+    <h1>Join CareerCraft 🚀</h1>
+    <p>Unlock your career journey by signing up.<br>Students, instructors, and admins — one platform, endless opportunities!</p>
+  </div>
+
+  <div class="signup-box">
+    <h2>Create Account</h2>
+    <form method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{ form.non_field_errors }}
+
+      <div class="form-left">
+        {% for field in form %}
+          {% if field.name in 'full_name email password confirm_password username phone' %}
+          <div class="form-group">
+            {{ field.label_tag }}
+            {{ field }}
+            {% if field.errors %}
+              <div class="errorlist">{{ field.errors|striptags }}</div>
+            {% endif %}
+          </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+
+      <div class="form-right">
+        {% for field in form %}
+          {% if field.name not in 'full_name email password confirm_password username phone' %}
+          <div class="form-group">
+            {{ field.label_tag }}
+            {{ field }}
+            {% if field.errors %}
+              <div class="errorlist">{{ field.errors|striptags }}</div>
+            {% endif %}
+          </div>
+          {% endif %}
+        {% endfor %}
+
+        <!-- Role-based sections -->
+        <div id="student-fields" class="role-section">
+          <p><strong>Student Details</strong></p>
+        </div>
+        <div id="instructor-fields" class="role-section">
+          <p><strong>Instructor Details</strong></p>
+        </div>
+        <div id="admin-fields" class="role-section">
+          <p><strong>Admin Details</strong></p>
+        </div>
+
+        <div class="checkbox-group">
+        <input type="checkbox" id="{{ form.not_robot.id_for_label }}" name="{{ form.not_robot.html_name }}" {% if form.not_robot.value %}checked{% endif %}>
+        <label for="{{ form.not_robot.id_for_label }}">I’m not a robot</label>
+        </div>
+
+        <div class="checkbox-group">
+          <input type="checkbox" id="{{ form.agree_terms.id_for_label }}" name="{{ form.agree_terms.html_name }}" {% if form.agree_terms.value %}checked{% endif %}>
+          <label for="{{ form.agree_terms.id_for_label }}">I agree to the Terms & Conditions</label>
+        </div>
+
+
+
+        <button type="submit">Create Account</button>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    function showRoleFields(role) {
+      document.getElementById("student-fields").style.display = "none";
+      document.getElementById("instructor-fields").style.display = "none";
+      document.getElementById("admin-fields").style.display = "none";
+
+      if(role === "Student") document.getElementById("student-fields").style.display = "block";
+      else if(role === "Instructor") document.getElementById("instructor-fields").style.display = "block";
+      else if(role === "Admin") document.getElementById("admin-fields").style.display = "block";
+    }
+
+    window.onload = function(){
+      const roleSelect = document.getElementById("id_role");
+      if(roleSelect){
+        showRoleFields(roleSelect.value);
+        roleSelect.addEventListener('change', function(){ showRoleFields(this.value); });
+      }
+    }
+  </script>
+
+</body>
+</html>
