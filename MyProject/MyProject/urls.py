@@ -23,6 +23,13 @@ urlpatterns = [
     path('', views.login_view, name='home'),
     path('login/', views.login_view, name='login'),
     path('signup/', views.signup_view, name='signup'),
+    path('courses/', views.courses, name='courses'),
 
+    path('my-courses/', views.my_courses, name='my_courses'),
+    path('profile/', views.profile, name='profile'),
+    path('about/', views.about, name='about'),
+    path('contact/', views.contact, name='contact'),
+
+    path("courses/enroll/<int:course_id>/", views.enroll_course, name="enroll_course"),
     path('admin/', admin.site.urls),
 ]

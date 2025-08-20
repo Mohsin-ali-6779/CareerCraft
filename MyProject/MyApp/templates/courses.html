@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -121,12 +122,10 @@
     }
 
     .course-card img {
-  width: 100%;
-  height: 20vw;     /* height based on viewport width */
-  max-height: 200px; /* optional max height */
-  object-fit: cover;
-}
-
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
 
     .course-card .content {
       padding: 15px;
@@ -156,23 +155,25 @@
       font-weight: bold;
       transition: 0.3s;
     }
-    .course-img {
-    width: 100%;   /* image will fill the container width */
-    height: auto;  /* keeps aspect ratio */
-    border-radius: 12px; /* optional rounded corners */
-    object-fit: cover;  /* fills container nicely if size changes */
-    }
-    .course-card img {
-  width: 100%;
-  height: 200px;   /* fixed height */
-  object-fit: cover; /* image adjusts without stretching */
-}
-
-
-
     .course-card button:hover {
       opacity: 0.85;
     }
+    .profile {
+        background: linear-gradient(135deg, #4f46e5, #06b6d4);
+        color: white;                /* text color */
+        padding: 10px 20px;          /* spacing */
+        border-radius: 8px;          /* rounded corners */
+        text-decoration: none;       /* remove underline */
+        font-weight: bold;
+        display: inline-block;       /* makes it look like a button */
+        transition: 0.3s ease;       /* smooth hover effect */
+    }
+
+    .profile:hover {
+        opacity: 0.9;                /* slight fade on hover */
+        transform: scale(1.05);      /* zoom effect */
+    }
+
   </style>
 </head>
 <body>
@@ -184,11 +185,15 @@
       <div class="search-bar">
         <input type="text" placeholder="Search courses..." id="courseSearch" onkeyup="searchCourses()">
       </div>
-      <a href="#">Home</a>
-      <a href="#">My Courses</a>
-      <a href="#">About</a>
-      <a href="#">Contact</a>
-      <div class="profile">Profile</div>
+      <a href="{% url 'home' %}">Home</a>
+      <a href="{% url 'my_courses' %}">My Courses</a>
+      <a href="{% url 'about' %}">About</a>
+      <a href="{% url 'contact' %}">Contact</a>
+
+      <a href="{% url 'profile' %}" class="profile">Profile</a>
+
+
+
     </div>
   </div>
 
@@ -204,92 +209,133 @@
     <div class="course-grid" id="courseGrid">
       
       <!-- Course Cards -->
-       <div class="course-card">
-        <img src="dsa.png" alt="Mobile App Development">
+      <div class="course-card">
+        <img src="{% static 'images/dsa.png' %}" alt="Data Structure and Algorithm">
         <div class="content">
           <h3>Data Structure and Algorithm</h3>
           <p>Learn Data Structure and Algorithms.</p>
-          <button>Enroll Now</button>
+          <form method="post" action="{% url 'enroll_course' 1 %}">
+            {% csrf_token %}
+            <button type="submit">Enroll</button>
+        </form>
+
         </div>
       </div>
+
       <div class="course-card">
-        <img src="python.png" alt="Python Programming">
+        <img src="{% static 'images/python.png' %}" alt="Python Programming">
         <div class="content">
           <h3>Python Programming</h3>
           <p>Learn Python from scratch and build powerful applications.</p>
-          <button>Enroll Now</button>
+          <form method="post" action="{% url 'enroll_course' 2 %}">
+            {% csrf_token %}
+            <button type="submit">Enroll</button>
+        </form>
+
         </div>
       </div>
 
       <div class="course-card">
-        <img src="javascript.png" alt="Web Development">
+        <img src="{% static 'images/javascript.png' %}" alt="Web Development">
         <div class="content">
           <h3>Full-Stack Web Development</h3>
           <p>Master HTML, CSS, JavaScript, React, and Django.</p>
-          <button>Enroll Now</button>
+          <form method="post" action="{% url 'enroll_course' 3 %}">
+            {% csrf_token %}
+            <button type="submit">Enroll</button>
+        </form>
+
         </div>
       </div>
 
       <div class="course-card">
-        <img src="dataanalytics.png" alt="Data Analytics">
+        <img src="{% static 'images/dataanalytics.png' %}" alt="Data Analytics">
         <div class="content">
           <h3>Data Analytics</h3>
           <p>Analyze and visualize data using Python, Pandas & Excel.</p>
-          <button>Enroll Now</button>
+          <form method="post" action="{% url 'enroll_course' 4 %}">
+            {% csrf_token %}
+            <button type="submit">Enroll</button>
+        </form>
+
         </div>
       </div>
 
       <div class="course-card">
-        <img src="ml.png" alt="Machine Learning">
+        <img src="{% static 'images/ml.png' %}" alt="Machine Learning">
         <div class="content">
           <h3>Machine Learning</h3>
           <p>Build ML models and understand AI concepts with projects.</p>
-          <button>Enroll Now</button>
+          <form method="post" action="{% url 'enroll_course' 5 %}">
+            {% csrf_token %}
+            <button type="submit">Enroll</button>
+        </form>
+
         </div>
       </div>
 
       <div class="course-card">
-        <img src="cyber.png" alt="Cyber Security">
+        <img src="{% static 'images/cyber.png' %}" alt="Cyber Security">
         <div class="content">
           <h3>Cyber Security</h3>
           <p>Learn ethical hacking, security practices, and protection.</p>
-          <button>Enroll Now</button>
+          <form method="post" action="{% url 'enroll_course' 6 %}">
+            {% csrf_token %}
+            <button type="submit">Enroll</button>
+        </form>
+
         </div>
       </div>
 
       <div class="course-card">
-        <img src="cloud.png" alt="Cloud Computing">
+        <img src="{% static 'images/cloud.png' %}" alt="Cloud Computing">
         <div class="content">
           <h3>Cloud Computing</h3>
           <p>Explore AWS, Azure, and cloud technologies for deployment.</p>
-          <button>Enroll Now</button>
+          <form method="post" action="{% url 'enroll_course' 7 %}">
+            {% csrf_token %}
+            <button type="submit">Enroll</button>
+        </form>
+
         </div>
       </div>
 
       <div class="course-card">
-        <img src="java.png" alt="Java Programming">
+        <img src="{% static 'images/java.png' %}" alt="Java Programming">
         <div class="content">
           <h3>Java Programming</h3>
           <p>Master Java and object-oriented programming concepts.</p>
-          <button>Enroll Now</button>
+          <form method="post" action="{% url 'enroll_course' 8 %}">
+            {% csrf_token %}
+            <button type="submit">Enroll</button>
+        </form>
+
         </div>
       </div>
 
       <div class="course-card">
-        <img src="mobile.png" alt="Mobile App Development">
+        <img src="{% static 'images/mobile.png' %}" alt="Mobile App Development">
         <div class="content">
           <h3>Mobile App Development</h3>
           <p>Build Android and iOS apps using Flutter and React Native.</p>
-          <button>Enroll Now</button>
+          <form method="post" action="{% url 'enroll_course' 9 %}">
+            {% csrf_token %}
+            <button type="submit">Enroll</button>
+        </form>
+
         </div>
       </div>
 
       <div class="course-card">
-        <img src="uiux.png" alt="UI/UX Design">
+        <img src="{% static 'images/uiux.png' %}" alt="UI/UX Design">
         <div class="content">
           <h3>UI/UX Design</h3>
           <p>Design beautiful interfaces and user experiences.</p>
-          <button>Enroll Now</button>
+         <form method="post" action="{% url 'enroll_course' 10 %}">
+            {% csrf_token %}
+            <button type="submit">Enroll</button>
+        </form>
+
         </div>
       </div>
 
