@@ -1,7 +1,7 @@
 # MyApp/views.py
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth import authenticate, login
-from .forms import SignupForm, LoginForm
+from .forms import SignupForm, LoginForm, ProfileForm, AchievementForm
 from .models import User
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -77,3 +77,41 @@ def enroll_course(request, course_id):
         return redirect('my_courses')
 
     return redirect('courses')
+
+@login_required
+def profile_view(request):
+    user = request.user
+    enrolled = user.enrolledcourse_set.select_related('course').all()
+    completed = enrolled.filter(is_completed=True)
+    achievements = user.achievement_set.all()
+    
+    return render(request, 'profile.html', {
+        'user': user,
+        'enrolled_courses': enrolled,
+        'completed_courses': completed,
+        'achievements': achievements,
+    })
+@login_required
+def edit_profile(request):
+    profile = request.user.profile
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            form.save()
+            return redirect('profile')  # Redirect to profile page
+    else:
+        form = ProfileForm(instance=profile)
+    return render(request, 'edit_profile.html', {'form': form})
+
+@login_required
+def add_achievement(request):
+    if request.method == "POST":
+        form = AchievementForm(request.POST)
+        if form.is_valid():
+            achievement = form.save(commit=False)
+            achievement.user = request.user
+            achievement.save()
+            return redirect('profile')
+    else:
+        form = AchievementForm()
+    return render(request, 'add_achievement.html', {'form': form})

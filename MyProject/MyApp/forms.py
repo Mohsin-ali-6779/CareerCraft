@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
 from .models import User, StudentDetail, InstructorDetail, AdminDetail
-
+from .models import Profile, Achievement
 # Signup Form
 class SignupForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput)
@@ -33,3 +33,11 @@ class LoginForm(forms.Form):
     ]
     role = forms.ChoiceField(choices=ROLE_CHOICES)
     remember_me = forms.BooleanField(required=False)
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['profile_picture', 'phone_number'] 
+class AchievementForm(forms.ModelForm):
+    class Meta:
+        model = Achievement
+        fields = ['record_type', 'course', 'title', 'description']

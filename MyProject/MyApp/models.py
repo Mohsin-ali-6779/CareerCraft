@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin, Group, Permission
+from django.conf import settings
 
 # -----------------------------
 # Custom User Manager
@@ -46,6 +47,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    profile_picture = models.ImageField(upload_to='profile_pics/', blank=True, null=True)
 
     # Override groups and user_permissions to avoid conflicts
     groups = models.ManyToManyField(
@@ -79,7 +81,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 # Role-specific Details
 # -----------------------------
 class StudentDetail(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='student_detail')
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='student_detail')
     department = models.CharField(max_length=50, blank=True)
     year_of_study = models.IntegerField(blank=True, null=True)
     course_interests = models.CharField(max_length=255, blank=True)
@@ -89,7 +91,7 @@ class StudentDetail(models.Model):
 
 
 class InstructorDetail(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='instructor_detail')
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='instructor_detail')
     qualification = models.CharField(max_length=100, blank=True)
     expertise = models.CharField(max_length=255, blank=True)
 
@@ -98,7 +100,7 @@ class InstructorDetail(models.Model):
 
 
 class AdminDetail(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='admin_detail')
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='admin_detail')
     admin_code = models.CharField(max_length=50, blank=True)
 
     def __str__(self):
@@ -112,7 +114,7 @@ class Course(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField()
     image_url = models.CharField(max_length=255, blank=True)
-    created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='created_courses')
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, related_name='created_courses')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -124,12 +126,12 @@ class Course(models.Model):
 # Enrollment
 # -----------------------------
 class Enrollment(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='enrollments')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='enrollments')
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='enrollments')
     progress = models.IntegerField(default=0)  # 0-100
     enrolled_at = models.DateTimeField(auto_now_add=True)
     completed_at = models.DateTimeField(blank=True, null=True)
-
+    score = models.IntegerField(default=0)
     class Meta:
         unique_together = ('user', 'course')
 
@@ -141,7 +143,7 @@ class Enrollment(models.Model):
 # Security Questions
 # -----------------------------
 class SecurityQuestion(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='security_questions')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='security_questions')
     question = models.CharField(max_length=255)
     answer_hash = models.CharField(max_length=255)
 
@@ -204,7 +206,7 @@ class QuizQuestion(models.Model):
 # Track Student Progress per Content
 # -----------------------------
 class CourseProgress(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='course_progress')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='course_progress')
     content = models.ForeignKey(CourseContent, on_delete=models.CASCADE, related_name='progress')
     completed = models.BooleanField(default=False)
     completed_at = models.DateTimeField(blank=True, null=True)
@@ -220,7 +222,7 @@ class CourseProgress(models.Model):
 # Quiz Attempts / Student Scores
 # -----------------------------
 class QuizAttempt(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='quiz_attempts')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='quiz_attempts')
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='quiz_attempts')
     question = models.ForeignKey(QuizQuestion, on_delete=models.CASCADE, related_name='attempts')
     selected_option = models.PositiveSmallIntegerField(choices=[
@@ -237,8 +239,42 @@ class QuizAttempt(models.Model):
 
     def __str__(self):
         return f"{self.user.full_name} - {self.question.question_text[:30]} - {'Correct' if self.is_correct else 'Wrong'}"
+class Achievement(models.Model):
+    RECORD_TYPES = (
+        ('achievement', 'Achievement'),
+        ('certification', 'Certification'),
+    )
+
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='achievements'
+    )
+    course = models.ForeignKey(
+        Course,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='achievements'
+    )
+    record_type = models.CharField(max_length=20, choices=RECORD_TYPES, default='achievement')
+    title = models.CharField(max_length=200)
+    description = models.TextField(blank=True, null=True)
+    date_awarded = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.user.full_name} - {self.record_type.capitalize()} - {self.title}"
 
 
+class Profile(models.Model):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    phone_number = models.CharField(max_length=15, blank=True, null=True)
+    profile_picture = models.ImageField(upload_to="profile_pics/", blank=True, null=True)
+    bio = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return self.user.username
+    
 # -----------------------------------
 # Table Structure in Comments
 # -----------------------------------

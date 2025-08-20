@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path
 from MyApp.views import login
 from MyApp import views 
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('', views.login_view, name='home'),
@@ -29,6 +30,11 @@ urlpatterns = [
     path('profile/', views.profile, name='profile'),
     path('about/', views.about, name='about'),
     path('contact/', views.contact, name='contact'),
+
+    path('profile/', views.profile_view, name='profile'),
+    path('profile/edit/', views.edit_profile, name='edit_profile'),
+    path('add-achievement/', views.add_achievement, name='add_achievement'),
+    path('logout/', auth_views.LogoutView.as_view(next_page='login'), name='logout'),
 
     path("courses/enroll/<int:course_id>/", views.enroll_course, name="enroll_course"),
     path('admin/', admin.site.urls),

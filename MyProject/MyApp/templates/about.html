@@ -1,1 +1,97 @@
-<h1>Welcome to About Page</h1>
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Me</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+  <style>
+    body {
+      background: #f4f6f9;
+      font-family: Arial, sans-serif;
+    }
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 30px;
+      border: 6px solid #007bff; /* colored border */
+      border-radius: 20px;
+      background: white;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    .profile-img {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      border: 3px solid #007bff;
+      margin-bottom: 15px;
+    }
+    h2, h4 {
+      color: #007bff;
+    }
+    .social-icons {
+  margin-top: 10px;
+}
+
+.social-icons a {
+  margin: 0 10px;
+  font-size: 1.8rem;
+  color: #007bff;
+  text-decoration: none;
+}
+
+.social-icons a:hover {
+  color: #0056b3;
+}
+
+  </style>
+</head>
+<body>
+
+  <div class="container text-center">
+    <!-- Profile Info -->
+    <img src="{% static 'images/OwnerProfile.jpeg' %}" alt="Owner Photo" class="profile-img">
+    <h2>Mohsin Ali</h2>
+    <p><strong>Software Developer</strong></p>
+    <p>Building impactful software solutions with modern technologies.</p>
+    <hr>
+
+    <!-- About -->
+    <h4>About Me</h4>
+    <p>
+      I am a passionate software developer with experience in <strong>Python, Django, and Full-Stack Development</strong>.  
+      I enjoy designing scalable solutions, managing projects end-to-end, and delivering high-quality applications that solve real problems.
+    </p>
+
+    <!-- Expertise -->
+    <h4>What I Do</h4>
+    <p>
+      - Design and develop modern web applications<br>
+      - Build intelligent AI/ML-powered systems<br>
+      - Lead projects with clean coding practices & version control<br>
+      - Collaborate with teams to deliver impactful software products
+    </p>
+
+    <!-- Vision -->
+    <h4>Vision</h4>
+    <p>
+      My goal is to continue creating efficient, user-friendly, and innovative software that empowers businesses and individuals.
+    </p>
+
+    <!-- Links -->
+    <h4>Connect With Me</h4>
+        <div class="social-icons">
+            <a href="https://github.com/Mohsin-ali-6779"><i class="bi bi-github"></i></a>
+            <a href="https://www.linkedin.com/in/mohsin-ali-45a694264/"><i class="bi bi-linkedin"></i></a>
+            <a href="#"><i class="bi bi-instagram"></i></a> <!-- Instagram instead of Twitter -->
+        </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
